@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    tools:context=".activity.student.StudentProfileActivity">
+
+
+    <Button
+        style="@style/button_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="List of Documents"
+        android:onClick="goToDocumentList"
+        />
+
+    <Button
+        style="@style/button_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="List of Exams"
+        android:onClick="goToExamList"
+        />
+
+    <Button
+        style="@style/button_style"
+        android:text="Check Exam Result"
+        android:onClick="goToCheckResult"
+        />
+
+    <Button
+        style="@style/button_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="goToUpdateProfile"
+        android:text="Update Profile" />
+
+</LinearLayout>

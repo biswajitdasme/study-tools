@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Study Tools</string>
+    <string name="textView_heading_sign_up">Sign Up</string>
+    <string name="editText_hint_name">Name</string>
+    <string name="editText_hint_email">Email</string>
+    <string name="editText_hint_mobile_number">Mobile Number</string>
+    <string name="editText_hint_password">Password</string>
+    <string name="button_create_account">Create Account</string>
+    <string name="textView_member_login">Already a member? Login</string>
+    <string name="button_login">Login</string>
+    <string name="textView_create_account">No account yet? Create one</string>
+    <string name="textView_heading_login">Login</string>
+    <string name="editText_hint_username">Username</string>
+    <string name="button_update_profile">Update</string>
+
+    <string name="empty_directory">Empty Directory</string>
+    <string name="storage_removed">Storage was removed or unmounted.</string>
+    <string name="choose_file">Select a file</string>
+    <string name="error_selecting_file">Error selecting File</string>
+    <string name="internal_storage">Internal storage</string>
+
+
+</resources>

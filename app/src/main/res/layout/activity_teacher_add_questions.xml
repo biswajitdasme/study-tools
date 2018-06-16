@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    tools:context="com.example.studytoolsTemp.activity.teacher.TeacherAddQuestionsActivity">
+
+    <Spinner
+        android:id="@+id/spinner_examList"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+    <EditText
+        android:id="@+id/editText_question"
+        style="@style/editTextStyle"
+        android:hint="Question" />
+
+    <EditText
+        android:id="@+id/editText_option1"
+        style="@style/editTextStyle"
+        android:hint="Option 1" />
+
+    <EditText
+        android:id="@+id/editText_option2"
+        style="@style/editTextStyle"
+        android:hint="Option 2" />
+
+    <EditText
+        android:id="@+id/editText_option3"
+        style="@style/editTextStyle"
+        android:hint="Option 3" />
+
+    <Spinner
+        android:id='@+id/spinner_answer'
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        />
+
+    <Button
+        style="@style/button_style"
+        android:text="Add Question"
+        android:onClick="addQuestion"
+        />
+
+</LinearLayout>

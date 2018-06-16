@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/list_margin">
+
+    <TextView
+        android:id="@+id/textView_examTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif-medium"
+        android:maxLines="1"
+        android:textAllCaps="true"
+        android:textColor="#2B3D4D"
+        android:textSize="14sp"
+        tools:text="Exam Title" />
+
+    <Button
+        android:id="@+id/button_start_exam"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/button_background"
+        android:text="Start Exam"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="12sp" />
+
+</RelativeLayout>
+

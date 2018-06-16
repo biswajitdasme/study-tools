@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.studytoolsTemp">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".activity.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity.LoginActivity" />
+        <activity android:name=".activity.student.StudentSignUpActivity" />
+        <activity android:name=".activity.student.StudentProfileActivity" />
+        <activity android:name=".activity.teacher.TeacherProfileActivity" />
+
+        <activity
+            android:name=".activity.UpdateProfile"
+            android:parentActivityName=".activity.teacher.TeacherProfileActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.teacher.TeacherProfileActivity" />
+        </activity>
+
+        <activity
+            android:name=".activity.teacher.TeacherFileUpload"
+            android:parentActivityName=".activity.teacher.TeacherProfileActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.teacher.TeacherProfileActivity" />
+        </activity>
+
+        <activity
+            android:name=".activity.FileListActivity"
+            android:parentActivityName=".activity.teacher.TeacherProfileActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.teacher.TeacherProfileActivity" />
+        </activity>
+
+        <activity
+            android:name=".activity.teacher.TeacherAddQuestionsActivity"
+            android:parentActivityName=".activity.teacher.TeacherProfileActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.teacher.TeacherProfileActivity" />
+        </activity>
+
+        <activity android:name=".activity.PDFViewerActivity" />
+
+        <activity
+            android:name=".activity.teacher.TeacherAddExamActivity"
+            android:parentActivityName=".activity.teacher.TeacherProfileActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.teacher.TeacherProfileActivity" />
+        </activity>
+
+        <activity
+            android:name=".activity.student.StudentExamList"
+            android:parentActivityName=".activity.student.StudentProfileActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.student.StudentProfileActivity" />
+        </activity>
+
+        <activity android:name=".activity.student.StudentQuizActivity" />
+
+        <activity
+            android:name=".activity.teacher.TeacherExamResultActivity"
+            android:parentActivityName=".activity.teacher.TeacherProfileActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.teacher.TeacherProfileActivity" />
+        </activity>
+
+
+    </application>
+
+</manifest>

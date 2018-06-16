@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    tools:context=".activity.teacher.TeacherFileUpload">
+
+
+    <EditText
+        android:id="@+id/editText_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="File Name"
+        android:inputType="text" />
+
+    <Spinner
+        android:id="@+id/spinner_upload"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:spinnerMode="dropdown" />
+
+    <Button
+        android:id="@+id/button_chooseFile"
+        style="@style/button_style"
+        android:onClick="chooseFile"
+        android:text="Choose FIle" />
+
+    <Button
+        android:id="@+id/button_uploadFile"
+        style="@style/button_style"
+        android:onClick="uploadFile"
+        android:text="Upload FIle" />
+
+    <TextView
+        android:id="@+id/textView_fileDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:textAppearanceMedium"
+        tools:text="Selected" />
+
+
+</LinearLayout>
