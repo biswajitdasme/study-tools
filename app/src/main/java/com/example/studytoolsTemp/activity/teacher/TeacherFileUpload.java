@@ -43,7 +43,7 @@ public class TeacherFileUpload extends AppCompatActivity {
     private TextView mTextView;
 
     private Spinner mSpinner;
-    private int mFileType;
+    private int mFileType=1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +54,7 @@ public class TeacherFileUpload extends AppCompatActivity {
 
         initializeViews();
 
-        initializeSpinner();
+        //initializeSpinner();
 
         setTitle("Upload File");
     }
@@ -111,10 +111,10 @@ public class TeacherFileUpload extends AppCompatActivity {
     private void initializeViews() {
         mEditText = findViewById(R.id.editText_description);
         mTextView = findViewById(R.id.textView_fileDescription);
-        mSpinner = findViewById(R.id.spinner_upload);
+       // mSpinner = findViewById(R.id.spinner_upload);
     }
 
-    private void initializeSpinner() {
+/*    private void initializeSpinner() {
         ArrayAdapter arrayAdapter = ArrayAdapter.createFromResource(this, R.array.array_fileType, android.R.layout.simple_spinner_item);
 
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -135,7 +135,7 @@ public class TeacherFileUpload extends AppCompatActivity {
                 }
             });
         }
-    }
+    }*/
 
     private void checkFilePermission() {
         if (ContextCompat.checkSelfPermission(TeacherFileUpload.this,

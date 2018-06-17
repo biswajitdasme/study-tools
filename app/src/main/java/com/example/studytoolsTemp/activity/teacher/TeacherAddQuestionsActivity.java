@@ -2,6 +2,8 @@ package com.example.studytoolsTemp.activity.teacher;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -91,5 +93,23 @@ public class TeacherAddQuestionsActivity extends AppCompatActivity {
             Question q = new Question(quesId, question, option1, option2, option3, answerId);
             DataHandler.addQuestion(this,q);
         }
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.list_menu, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.button_menu_logout:
+                DataHandler.logout(this);
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
