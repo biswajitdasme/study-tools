@@ -26,15 +26,12 @@ public class UpdateProfile extends AppCompatActivity {
         setContentView(R.layout.activity_update_profile);
 
         initializeViews();
-
         initializeData();
-
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.list_menu, menu);
-
         return true;
     }
 

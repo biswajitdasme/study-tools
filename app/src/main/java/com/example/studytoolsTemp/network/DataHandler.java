@@ -51,7 +51,6 @@ public class DataHandler {
     static final String LOG_TAG = DataHandler.class.getSimpleName();
     private static ArrayList<FileInfo> fileList = new ArrayList<>();
     private static ArrayList<Exam> examList = new ArrayList<>();
-    private static ArrayList<Question> questionList = new ArrayList<>();
     private static ArrayList<Answer> answerList = new ArrayList<>();
     private static ArrayList<ExamResult> examResults = new ArrayList<>();
 
@@ -112,7 +111,6 @@ public class DataHandler {
         requestQueue.add(stringRequest);
 
     }
-
 
     public static void signup(final Context context, final User user) {
 
@@ -447,63 +445,6 @@ public class DataHandler {
 
     }
 
-    public static void getQuestionList(final Context context, final QuestionCallBack questionCallBack, final int examId) {
-
-
-        String url = BASE_URL + "questionlist.php" + "?examid=" + examId;
-
-        RequestQueue requestQueue = Volley.newRequestQueue(context);
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    JSONArray jsonArray = jsonObject.getJSONArray("result");
-
-                    JSONObject flagObject = jsonArray.getJSONObject(0);
-
-                    if (flagObject.getString("success").equalsIgnoreCase("true")) {
-
-                        questionList.clear();
-
-                        int length = jsonArray.length();
-
-                        for (int i = 1; i < length; i++) {
-                            JSONObject questionObject = jsonArray.getJSONObject(i);
-
-                            questionList.add(new Question(questionObject.getInt("examid"),
-                                    questionObject.getString("question"),
-                                    questionObject.getString("option1"),
-                                    questionObject.getString("option2"),
-                                    questionObject.getString("option3"),
-                                    questionObject.getInt("answer")
-                            ));
-                        }
-
-                        questionCallBack.onSuccess(questionList);
-
-                    } else {
-
-                        showToast(context, "No Data Found For You");
-                    }
-
-                } catch (JSONException e) {
-                    Log.e(LOG_TAG, e.getMessage());
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e(LOG_TAG, "" + error);
-            }
-        });
-
-        requestQueue.add(stringRequest);
-
-    }
-
     public static void getAnswerList(final Context context, final AnswerCallBack answerCallBack, final int examId) {
 
 
@@ -661,77 +602,6 @@ public class DataHandler {
         alertDialog.show();
     }
 
-    public static void addExamTitle(final Context context, final String examTitle) {
-        String url = BASE_URL + "addexam.php";
 
-        RequestQueue requestQueue = Volley.newRequestQueue(context);
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-                Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.i(LOG_TAG, "" + error);
-
-                Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> stringMap = new HashMap<>();
-
-                stringMap.put("title", examTitle);
-                return stringMap;
-            }
-        };
-
-        requestQueue.add(stringRequest);
-
-    }
-
-    public static void addQuestion(final Context context, final Question question) {
-
-        String url = BASE_URL + "addquestion.php";
-
-        RequestQueue requestQueue = Volley.newRequestQueue(context);
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-                Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.i(LOG_TAG, "" + error);
-
-                Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> stringMap = new HashMap<>();
-
-                stringMap.put("examid", String.valueOf(question.getExamid()));
-                stringMap.put("question", question.getQuestion());
-                stringMap.put("option1", question.getOption1());
-                stringMap.put("option2", question.getOption2());
-                stringMap.put("option3", question.getOption3());
-                stringMap.put("answer", String.valueOf(question.getAnswerNr()));
-
-                return stringMap;
-            }
-        };
-
-        requestQueue.add(stringRequest);
-
-    }
 
 }

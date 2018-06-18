@@ -9,40 +9,18 @@
 
     <Button
         style="@style/button_style"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:onClick="goToUploadFile"
         android:text="Upload File" />
 
     <Button
         style="@style/button_style"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:onClick="goToDocumentList"
         android:text="List of Documents" />
 
     <Button
         style="@style/button_style"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:onClick="goToQuestionList"
         android:text="List of Questions" />
-
-    <!--    <Button
-            style="@style/button_style"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Add Exam"
-            android:onClick="goToAddExam"
-            />
-
-        <Button
-            style="@style/button_style"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Add questions to Exam"
-            android:onClick="goToAddQuestions"
-            />-->
 
     <Button
         style="@style/button_style"
@@ -56,8 +34,6 @@
 
     <Button
         style="@style/button_style"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:onClick="goToUpdateProfile"
         android:text="Update Profile" />
 

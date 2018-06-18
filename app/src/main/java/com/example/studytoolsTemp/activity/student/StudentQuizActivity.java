@@ -48,7 +48,7 @@ public class StudentQuizActivity extends AppCompatActivity implements OnPageChan
     public static final String EXTRA_EXAM_ID = "extraId";
     public static int examId;
 
-    private static final long COUNTDOWN_IN_MILLIS = 15000;
+    private static final long COUNTDOWN_IN_MILLIS = 20000;
 
     private static final String KEY_SCORE = "keyScore";
     private static final String KEY_QUESTION_COUNT = "keyQuestionCount";
@@ -111,24 +111,6 @@ public class StudentQuizActivity extends AppCompatActivity implements OnPageChan
         examId = getIntent().getIntExtra("examId", -1);
 
         if (savedInstanceState == null) {
-//            QuizDBHelper dbHelper = new QuizDBHelper(this);
-//            questionList = dbHelper.getAllQuestions();
-/*            DataHandler.getQuestionList(this, new QuestionCallBack() {
-                @Override
-                public void onSuccess(ArrayList<Question> quesList) {
-                    questionList = quesList;
-                    questionCountTotal = questionList.size();
-                    Collections.shuffle(questionList);
-
-                    showNextQuestion();
-                }
-
-                @Override
-                public void onFail(String msg) {
-
-                }
-            }, examId);*/
-
             DataHandler.getAnswerList(this, new AnswerCallBack() {
                 @Override
                 public void onSuccess(ArrayList<Answer> answerArrayList) {
@@ -189,11 +171,7 @@ public class StudentQuizActivity extends AppCompatActivity implements OnPageChan
         if (questionCounter < questionCountTotal) {
             currentAnswer = answerList.get(questionCounter);
 
-            textViewQuestion.setText("Select Your Answer");
- /*           textViewQuestion.setText(currentQuestion.getQuestion());
-            rb1.setText(currentQuestion.getOption1());
-            rb2.setText(currentQuestion.getOption2());
-            rb3.setText(currentQuestion.getOption3());*/
+            textViewQuestion.setText("Select Answer For Ques:"+currentAnswer.getQuestionNum());
 
             questionCounter++;
             textViewQuestionCount.setText("Question: " + questionCounter + "/" + questionCountTotal);
@@ -292,37 +270,22 @@ public class StudentQuizActivity extends AppCompatActivity implements OnPageChan
 
     @Override
     public void onBackPressed() {
-/*        if (backpressedTime + 200 > System.currentTimeMillis()) {
-            finishQuiz();
-        } else {
-            Toast.makeText(this, "Press again", Toast.LENGTH_SHORT).show();
-        }
 
-        backpressedTime = System.currentTimeMillis();*/
-
-
-        // Build the alert dialog.
         AlertDialog.Builder myAlertBuilder = new AlertDialog.Builder(StudentQuizActivity.this);
-        // Set the dialog title.
-        // myAlertBuilder.setTitle("");
-        // Set the dialog message.
         myAlertBuilder.setMessage("Are you sure to exit ? ");
         // Add the buttons.
         myAlertBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                // User clicked OK button.
                 finishQuiz();
             }
         });
         myAlertBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                // User clicked the CANCEL button.
 
             }
         });
 
         myAlertBuilder.setCancelable(false);
-        // Create and show the AlertDialog.
         myAlertBuilder.show();
     }
 
@@ -383,26 +346,6 @@ public class StudentQuizActivity extends AppCompatActivity implements OnPageChan
     public void onPageChanged(int page, int pageCount) {
         pageNumber = page;
         setTitle(String.format("%s %s / %s", pdfFileName, page + 1, pageCount));
-    }
-
-    public String getFileName(Uri uri) {
-        String result = null;
-        if (uri.getScheme().equals("content")) {
-            Cursor cursor = getContentResolver().query(uri, null, null, null, null);
-            try {
-                if (cursor != null && cursor.moveToFirst()) {
-                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
-                }
-            } finally {
-                if (cursor != null) {
-                    cursor.close();
-                }
-            }
-        }
-        if (result == null) {
-            result = uri.getLastPathSegment();
-        }
-        return result;
     }
 
 

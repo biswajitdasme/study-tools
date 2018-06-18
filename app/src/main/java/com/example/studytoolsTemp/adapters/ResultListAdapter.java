@@ -45,16 +45,6 @@ public class ResultListAdapter extends RecyclerView.Adapter<ResultListAdapter.Re
         holder.mNameTextView.setText(name);
         holder.mTitleTextView.setText(examTitle);
         holder.mScoreTextView.setText("Result : " + String.valueOf(result));
-
-/*        holder.mStartButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext.getApplicationContext(), StudentQuizActivity.class);
-                intent.putExtra("examId",examId);
-                // mContext.startActivity(intent);
-                ((Activity) mContext).startActivityForResult(intent, StudentExamList.REQUEST_QUIZ_CODE);
-            }
-        });*/
     }
 
     @Override

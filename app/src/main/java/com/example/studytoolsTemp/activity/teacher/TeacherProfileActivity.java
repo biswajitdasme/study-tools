@@ -19,7 +19,6 @@ public class TeacherProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher_profile);
-
     }
 
     @Override
@@ -31,7 +30,6 @@ public class TeacherProfileActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.list_menu, menu);
-
         return true;
     }
 
@@ -61,16 +59,6 @@ public class TeacherProfileActivity extends AppCompatActivity {
         Intent intent = new Intent(this, FileListActivity.class);
         intent.putExtra("forStudent", false);
         intent.putExtra("isQuestion", false);
-        startActivity(intent);
-    }
-
-    public void goToAddExam(View view) {
-        Intent intent = new Intent(this, TeacherAddExamActivity.class);
-        startActivity(intent);
-    }
-
-    public void goToAddQuestions(View view) {
-        Intent intent = new Intent(this, TeacherAddQuestionsActivity.class);
         startActivity(intent);
     }
 

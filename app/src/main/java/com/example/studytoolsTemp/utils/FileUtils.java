@@ -28,10 +28,7 @@ public class FileUtils {
     static final String TAG = "FileUtils";
     private static final boolean DEBUG = false; // Set to true to enable logging
 
-    public static final String MIME_TYPE_AUDIO = "audio/*";
-    public static final String MIME_TYPE_TEXT = "text/*";
     public static final String MIME_TYPE_IMAGE = "image/*";
-    public static final String MIME_TYPE_VIDEO = "video/*";
     public static final String MIME_TYPE_APP = "application/pdf";
 
     public static final String HIDDEN_PREFIX = ".";
@@ -178,11 +175,8 @@ public class FileUtils {
 
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
 
-        // DocumentProvider
         if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
-            // LocalStorageProvider
             if (isLocalStorageDocument(uri)) {
-                // The path is the id
                 return DocumentsContract.getDocumentId(uri);
             }
             // ExternalStorageProvider
@@ -197,7 +191,6 @@ public class FileUtils {
 
                 // TODO handle non-primary volumes
             }
-            // DownloadsProvider
             else if (isDownloadsDocument(uri)) {
 
                 final String id = DocumentsContract.getDocumentId(uri);
@@ -206,7 +199,6 @@ public class FileUtils {
 
                 return getDataColumn(context, contentUri, null, null);
             }
-            // MediaProvider
             else if (isMediaDocument(uri)) {
                 final String docId = DocumentsContract.getDocumentId(uri);
                 final String[] split = docId.split(":");
@@ -229,16 +221,13 @@ public class FileUtils {
                 return getDataColumn(context, contentUri, selection, selectionArgs);
             }
         }
-        // MediaStore (and general)
         else if ("content".equalsIgnoreCase(uri.getScheme())) {
 
-            // Return the remote address
             if (isGooglePhotosUri(uri))
                 return uri.getLastPathSegment();
 
             return getDataColumn(context, uri, null, null);
         }
-        // File
         else if ("file".equalsIgnoreCase(uri.getScheme())) {
             return uri.getPath();
         }
@@ -342,7 +331,6 @@ public class FileUtils {
     public static Comparator<File> sComparator = new Comparator<File>() {
         @Override
         public int compare(File f1, File f2) {
-            // Sort alphabetically by lower case, which is much cleaner
             return f1.getName().toLowerCase().compareTo(
                     f2.getName().toLowerCase());
         }
@@ -353,7 +341,6 @@ public class FileUtils {
         @Override
         public boolean accept(File file) {
             final String fileName = file.getName();
-            // Return files only (not directories) and skip hidden files
             return file.isFile() && !fileName.startsWith(HIDDEN_PREFIX);
         }
     };
@@ -363,18 +350,14 @@ public class FileUtils {
         @Override
         public boolean accept(File file) {
             final String fileName = file.getName();
-            // Return directories only and skip hidden directories
             return file.isDirectory() && !fileName.startsWith(HIDDEN_PREFIX);
         }
     };
 
 
     public static Intent createGetContentIntent() {
-        // Implicitly allow the user to select a particular kind of data
         final Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        // The MIME data type filter
         intent.setType("*/*");
-        // Only return URIs that can be opened with ContentResolver
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         return intent;
     }

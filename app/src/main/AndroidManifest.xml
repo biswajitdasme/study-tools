@@ -41,27 +41,7 @@
             android:label="Uploaded Files"
             />
 
-        <activity
-            android:name=".activity.teacher.TeacherAddQuestionsActivity"
-            android:parentActivityName=".activity.teacher.TeacherProfileActivity"
-            android:label="Add Questions"
-            >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activity.teacher.TeacherProfileActivity" />
-        </activity>
-
         <activity android:name=".activity.PDFViewerActivity" />
-
-        <activity
-            android:name=".activity.teacher.TeacherAddExamActivity"
-            android:parentActivityName=".activity.teacher.TeacherProfileActivity"
-            android:label="Add Exam"
-            >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activity.teacher.TeacherProfileActivity" />
-        </activity>
 
         <activity
             android:name=".activity.student.StudentExamList"

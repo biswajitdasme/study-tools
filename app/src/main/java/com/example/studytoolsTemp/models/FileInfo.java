@@ -24,17 +24,6 @@ public class FileInfo implements Parcelable {
 
     }
 
-    public FileInfo(String description, int userid) {
-        this.description = description;
-        this.userid = userid;
-    }
-
-    public FileInfo(String description, int userid, int fileType) {
-        this.description = description;
-        this.userid = userid;
-        this.fileType = fileType;
-    }
-
     public FileInfo(String description, int userid, int fileType, int questions) {
         this.description = description;
         this.userid = userid;

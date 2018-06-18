@@ -71,11 +71,4 @@ public class StudentProfileActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
-/*    public void goToQuestionList(View view) {
-        Intent intent = new Intent(this, FileListActivity.class);
-        intent.putExtra("forStudent",true);
-        intent.putExtra("isQuestion",true);
-        startActivity(intent);
-    }*/
 }

@@ -15,6 +15,6 @@ public interface UserClient {
     @POST("save_file.php")
     Call<ResponseModel> uploadFile(
             @Part("file_description") RequestBody description,
-            @Part MultipartBody.Part photo);
+            @Part MultipartBody.Part file);
 
 }
