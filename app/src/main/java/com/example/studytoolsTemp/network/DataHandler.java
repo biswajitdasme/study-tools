@@ -25,8 +25,11 @@ import com.example.studytoolsTemp.adapters.ExamListAdapter;
 import com.example.studytoolsTemp.adapters.ResultListAdapter;
 import com.example.studytoolsTemp.adapters.FileListAdapter;
 import com.example.studytoolsTemp.data.preference.AppPreference;
+import com.example.studytoolsTemp.interfaces.AnswerCallBack;
 import com.example.studytoolsTemp.interfaces.ExamCallBack;
+import com.example.studytoolsTemp.interfaces.FilesCallBack;
 import com.example.studytoolsTemp.interfaces.QuestionCallBack;
+import com.example.studytoolsTemp.models.Answer;
 import com.example.studytoolsTemp.models.Exam;
 import com.example.studytoolsTemp.models.ExamResult;
 import com.example.studytoolsTemp.models.FileInfo;
@@ -49,6 +52,7 @@ public class DataHandler {
     private static ArrayList<FileInfo> fileList = new ArrayList<>();
     private static ArrayList<Exam> examList = new ArrayList<>();
     private static ArrayList<Question> questionList = new ArrayList<>();
+    private static ArrayList<Answer> answerList = new ArrayList<>();
     private static ArrayList<ExamResult> examResults = new ArrayList<>();
 
     private static void showToast(Context context, String msg) {
@@ -258,10 +262,64 @@ public class DataHandler {
 
     }
 
+    public static void getQuestionsOfUser(final Context context, String userid, final FilesCallBack filesCallBack) {
+
+        String url = BASE_URL + "filelist.php";
+
+        url = url + "?userid=" + userid + "&filetype=" + 2;
+
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    JSONArray jsonArray = jsonObject.getJSONArray("result");
+
+                    JSONObject flagObject = jsonArray.getJSONObject(0);
+
+                    if (flagObject.getString("success").equalsIgnoreCase("true")) {
+
+                        fileList.clear();
+
+                        for (int i = 1; i < jsonArray.length(); i++) {
+                            JSONObject fileObject = jsonArray.getJSONObject(i);
+
+                            fileList.add(new FileInfo(fileObject.getInt("id"),
+                                    fileObject.getString("username"),
+                                    fileObject.getString("filename"),
+                                    fileObject.getString("filedescription"),
+                                    fileObject.getInt("questions")
+                            ));
+                        }
+
+                        filesCallBack.onSuccess(fileList);
+
+                    } else {
+
+                        showToast(context, "No Data Found For You");
+                    }
+
+                } catch (JSONException e) {
+                    Log.e(LOG_TAG, e.getMessage());
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(LOG_TAG, "" + error);
+            }
+        });
+
+        requestQueue.add(stringRequest);
+
+    }
+
     public static void getExamList(final Context context, final ExamCallBack onExamCallBack, final int userId) {
 
 
-        String url = BASE_URL + "examlist.php";
+        String url = BASE_URL + "exampdflist.php";
 
         if (userId != -1)
             url += "?userid=" + userId;
@@ -288,7 +346,9 @@ public class DataHandler {
                             JSONObject examObject = jsonArray.getJSONObject(i);
 
                             examList.add(new Exam(examObject.getInt("id"),
-                                    examObject.getString("examtitle")));
+                                    examObject.getString("examtitle"),
+                                    examObject.getString("filename")
+                            ));
                         }
 
                         if (userId != -1) {
@@ -387,7 +447,6 @@ public class DataHandler {
 
     }
 
-
     public static void getQuestionList(final Context context, final QuestionCallBack questionCallBack, final int examId) {
 
 
@@ -445,6 +504,59 @@ public class DataHandler {
 
     }
 
+    public static void getAnswerList(final Context context, final AnswerCallBack answerCallBack, final int examId) {
+
+
+        String url = BASE_URL + "answerlist.php" + "?examid=" + examId;
+
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    JSONArray jsonArray = jsonObject.getJSONArray("result");
+
+                    JSONObject flagObject = jsonArray.getJSONObject(0);
+
+                    if (flagObject.getString("success").equalsIgnoreCase("true")) {
+
+                        answerList.clear();
+
+                        int length = jsonArray.length();
+
+                        for (int i = 1; i < length; i++) {
+                            JSONObject questionObject = jsonArray.getJSONObject(i);
+
+                            answerList.add(new Answer(questionObject.getInt("examid"),
+                                    questionObject.getInt("questionnum"),
+                                    questionObject.getInt("answer")
+                            ));
+                        }
+
+                        answerCallBack.onSuccess(answerList);
+
+                    } else {
+
+                        showToast(context, "No Data Found For You");
+                    }
+
+                } catch (JSONException e) {
+                    Log.e(LOG_TAG, e.getMessage());
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(LOG_TAG, "" + error);
+            }
+        });
+
+        requestQueue.add(stringRequest);
+
+    }
 
     public static void storeResult(final Context context, final int userid, final int examid, final int result) {
 
@@ -474,6 +586,42 @@ public class DataHandler {
                 stringMap.put("userid", String.valueOf(userid));
                 stringMap.put("examid", String.valueOf(examid));
                 stringMap.put("result", String.valueOf(result));
+                return stringMap;
+            }
+        };
+
+        requestQueue.add(stringRequest);
+
+    }
+
+    public static void storeAnswer(final Context context, final int examid, final int questionnum, final int answer) {
+
+        String url = BASE_URL + "storeanswer.php";
+
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i(LOG_TAG, "" + error);
+
+                Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> stringMap = new HashMap<>();
+
+                stringMap.put("examid", String.valueOf(examid));
+                stringMap.put("questionnum", String.valueOf(questionnum));
+                stringMap.put("answer", String.valueOf(answer));
                 return stringMap;
             }
         };

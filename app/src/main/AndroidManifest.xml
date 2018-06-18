@@ -20,38 +20,32 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.student.StudentSignUpActivity" />
-        <activity android:name=".activity.student.StudentProfileActivity" />
-        <activity android:name=".activity.teacher.TeacherProfileActivity" />
+        <activity android:name=".activity.student.StudentProfileActivity" android:label="Student Home"/>
 
-        <activity
-            android:name=".activity.UpdateProfile"
-            android:parentActivityName=".activity.teacher.TeacherProfileActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activity.teacher.TeacherProfileActivity" />
-        </activity>
+        <activity android:name=".activity.teacher.TeacherProfileActivity" android:label="Teacher Home" />
+        <activity android:name=".activity.UpdateProfile" android:label="Update Profile"/>
 
         <activity
             android:name=".activity.teacher.TeacherFileUpload"
+            android:label="Upload File"
             android:parentActivityName=".activity.teacher.TeacherProfileActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activity.teacher.TeacherProfileActivity" />
         </activity>
 
-        <activity
-            android:name=".activity.FileListActivity"
-            android:parentActivityName=".activity.teacher.TeacherProfileActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activity.teacher.TeacherProfileActivity" />
-        </activity>
+        <activity android:name=".activity.FileListActivity"
+            android:label="Uploaded Files"
+            />
 
         <activity
             android:name=".activity.teacher.TeacherAddQuestionsActivity"
-            android:parentActivityName=".activity.teacher.TeacherProfileActivity">
+            android:parentActivityName=".activity.teacher.TeacherProfileActivity"
+            android:label="Add Questions"
+            >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activity.teacher.TeacherProfileActivity" />
@@ -61,7 +55,9 @@
 
         <activity
             android:name=".activity.teacher.TeacherAddExamActivity"
-            android:parentActivityName=".activity.teacher.TeacherProfileActivity">
+            android:parentActivityName=".activity.teacher.TeacherProfileActivity"
+            android:label="Add Exam"
+            >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activity.teacher.TeacherProfileActivity" />
@@ -69,6 +65,7 @@
 
         <activity
             android:name=".activity.student.StudentExamList"
+            android:label="Exam List"
             android:parentActivityName=".activity.student.StudentProfileActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -76,15 +73,18 @@
         </activity>
 
         <activity android:name=".activity.student.StudentQuizActivity" />
+        <activity
+            android:name=".activity.ExamResultActivity"
+            android:label="Exam Result" />
 
         <activity
-            android:name=".activity.teacher.TeacherExamResultActivity"
+            android:name=".activity.teacher.TeacherAddAnswer"
+            android:label="Add Answers"
             android:parentActivityName=".activity.teacher.TeacherProfileActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activity.teacher.TeacherProfileActivity" />
         </activity>
-
 
     </application>
 

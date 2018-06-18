@@ -12,8 +12,8 @@
         android:orientation="vertical">
 
         <TextView
-            android:text="@string/textView_heading_sign_up"
-            style="@style/textViewHeadingStyle" />
+            style="@style/textViewHeadingStyle"
+            android:text="@string/textView_heading_sign_up" />
 
         <EditText
             android:id="@+id/input_signUp_name"
@@ -50,9 +50,8 @@
         <Button
             android:id="@+id/button_signup"
             style="@style/button_style"
-            android:text="@string/button_create_account"
             android:onClick="signUp"
-            />
+            android:text="@string/button_create_account" />
 
         <TextView
             android:id="@+id/link_login"

@@ -3,11 +3,16 @@ package com.example.studytoolsTemp.activity.student;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.database.Cursor;
 import android.graphics.Color;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.provider.OpenableColumns;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -16,20 +21,32 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.studytoolsTemp.R;
-import com.example.studytoolsTemp.interfaces.QuestionCallBack;
-import com.example.studytoolsTemp.models.Question;
+import com.example.studytoolsTemp.interfaces.AnswerCallBack;
+import com.example.studytoolsTemp.models.Answer;
 import com.example.studytoolsTemp.network.DataHandler;
+import com.github.barteksc.pdfviewer.PDFView;
+import com.github.barteksc.pdfviewer.listener.OnPageChangeListener;
+import com.github.barteksc.pdfviewer.listener.OnPageErrorListener;
+import com.github.barteksc.pdfviewer.scroll.DefaultScrollHandle;
 
+import java.io.BufferedInputStream;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Locale;
 
-public class StudentQuizActivity extends AppCompatActivity {
+public class StudentQuizActivity extends AppCompatActivity implements OnPageChangeListener, OnPageErrorListener {
+    private static final String TAG = StudentQuizActivity.class.getSimpleName();
+
+    private PDFView pdfView;
+    private Uri uri;
+    private Integer pageNumber = 0;
+    private String pdfFileName;
 
     public static final String EXTRA_SCORE = "extraScore";
     public static final String EXTRA_EXAM_ID = "extraId";
-    public static int EXAM_ID;
+    public static int examId;
 
     private static final long COUNTDOWN_IN_MILLIS = 15000;
 
@@ -55,10 +72,10 @@ public class StudentQuizActivity extends AppCompatActivity {
     private CountDownTimer countDownTimer;
     private long timeLeftInMillis;
 
-    private ArrayList<Question> questionList;
+    private ArrayList<Answer> answerList;
     private int questionCounter;
     private int questionCountTotal;
-    private Question currentQuestion;
+    private Answer currentAnswer;
 
     private int score;
     private boolean answered;
@@ -66,8 +83,16 @@ public class StudentQuizActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_quiz);
+
+        pdfView = findViewById(R.id.pdfViewQuestion);
+        String url = getIntent().getStringExtra("url");
+        new RetrievePDFStream().execute(url);
+
+        uri = Uri.parse(url);
+        pdfFileName = getIntent().getStringExtra("name");
 
         textViewQuestion = findViewById(R.id.text_view_question);
         textViewScore = findViewById(R.id.text_view_score);
@@ -83,13 +108,12 @@ public class StudentQuizActivity extends AppCompatActivity {
         textColorDefaultCd = textViewCountDown.getTextColors();
 
 
-        EXAM_ID = getIntent().getIntExtra("examId", -1);
-
+        examId = getIntent().getIntExtra("examId", -1);
 
         if (savedInstanceState == null) {
 //            QuizDBHelper dbHelper = new QuizDBHelper(this);
 //            questionList = dbHelper.getAllQuestions();
-            DataHandler.getQuestionList(this, new QuestionCallBack() {
+/*            DataHandler.getQuestionList(this, new QuestionCallBack() {
                 @Override
                 public void onSuccess(ArrayList<Question> quesList) {
                     questionList = quesList;
@@ -103,14 +127,30 @@ public class StudentQuizActivity extends AppCompatActivity {
                 public void onFail(String msg) {
 
                 }
-            }, EXAM_ID);
+            }, examId);*/
+
+            DataHandler.getAnswerList(this, new AnswerCallBack() {
+                @Override
+                public void onSuccess(ArrayList<Answer> answerArrayList) {
+                    answerList = answerArrayList;
+                    questionCountTotal = answerList.size();
+                    showNextQuestion();
+
+                }
+
+                @Override
+                public void onFail(String msg) {
+
+                }
+            }, examId);
 
         } else {
-            questionList = savedInstanceState.getParcelableArrayList(KEY_QUESTION_LIST);
 
-            questionCountTotal = questionList.size();
+            answerList = savedInstanceState.getParcelableArrayList(KEY_QUESTION_LIST);
+
+            questionCountTotal = answerList.size();
             questionCounter = savedInstanceState.getInt(KEY_QUESTION_COUNT);
-            currentQuestion = questionList.get(questionCounter - 1);
+            currentAnswer = answerList.get(questionCounter - 1);
             score = savedInstanceState.getInt(KEY_SCORE);
             timeLeftInMillis = savedInstanceState.getLong(KEY_MILLIS_LEFT);
             answered = savedInstanceState.getBoolean(KEY_ANSWERED);
@@ -147,12 +187,13 @@ public class StudentQuizActivity extends AppCompatActivity {
         rbGroup.clearCheck();
 
         if (questionCounter < questionCountTotal) {
-            currentQuestion = questionList.get(questionCounter);
+            currentAnswer = answerList.get(questionCounter);
 
-            textViewQuestion.setText(currentQuestion.getQuestion());
+            textViewQuestion.setText("Select Your Answer");
+ /*           textViewQuestion.setText(currentQuestion.getQuestion());
             rb1.setText(currentQuestion.getOption1());
             rb2.setText(currentQuestion.getOption2());
-            rb3.setText(currentQuestion.getOption3());
+            rb3.setText(currentQuestion.getOption3());*/
 
             questionCounter++;
             textViewQuestionCount.setText("Question: " + questionCounter + "/" + questionCountTotal);
@@ -205,7 +246,7 @@ public class StudentQuizActivity extends AppCompatActivity {
         RadioButton rbSelected = findViewById(rbGroup.getCheckedRadioButtonId());
         int answerNr = rbGroup.indexOfChild(rbSelected) + 1;
 
-        if (answerNr == currentQuestion.getAnswerNr()) {
+        if (answerNr == currentAnswer.getAnswer()) {
             score++;
             textViewScore.setText("Score: " + score);
         }
@@ -218,18 +259,18 @@ public class StudentQuizActivity extends AppCompatActivity {
         rb2.setTextColor(Color.RED);
         rb3.setTextColor(Color.RED);
 
-        switch (currentQuestion.getAnswerNr()) {
+        switch (currentAnswer.getAnswer()) {
             case 1:
                 rb1.setTextColor(Color.GREEN);
-                textViewQuestion.setText("Answer 1 is correct");
+                textViewQuestion.setText("Answer A is correct");
                 break;
             case 2:
                 rb2.setTextColor(Color.GREEN);
-                textViewQuestion.setText("Answer 2 is correct");
+                textViewQuestion.setText("Answer B is correct");
                 break;
             case 3:
                 rb3.setTextColor(Color.GREEN);
-                textViewQuestion.setText("Answer 3 is correct");
+                textViewQuestion.setText("Answer C is correct");
                 break;
         }
 
@@ -243,7 +284,7 @@ public class StudentQuizActivity extends AppCompatActivity {
     private void finishQuiz() {
         Intent intent = new Intent();
         intent.putExtra(EXTRA_SCORE, score);
-        intent.putExtra(EXTRA_EXAM_ID, EXAM_ID);
+        intent.putExtra(EXTRA_EXAM_ID, examId);
         setResult(RESULT_OK, intent);
 
         finish();
@@ -301,6 +342,73 @@ public class StudentQuizActivity extends AppCompatActivity {
         outState.putInt(KEY_QUESTION_COUNT, questionCounter);
         outState.putLong(KEY_MILLIS_LEFT, timeLeftInMillis);
         outState.putBoolean(KEY_ANSWERED, answered);
-        outState.putParcelableArrayList(KEY_QUESTION_LIST, questionList);
+        outState.putParcelableArrayList(KEY_QUESTION_LIST, answerList);
     }
+
+    class RetrievePDFStream extends AsyncTask<String, Void, InputStream> {
+        @Override
+        protected InputStream doInBackground(String... strings) {
+            InputStream inputStream = null;
+
+            try {
+                URL url = new URL(strings[0]);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+
+                if (httpURLConnection.getResponseCode() == 200) {
+                    inputStream = new BufferedInputStream(httpURLConnection.getInputStream());
+                }
+
+            } catch (Exception e) {
+                return null;
+            }
+
+            return inputStream;
+        }
+
+        @Override
+        protected void onPostExecute(InputStream inputStream) {
+            pdfView.fromStream(inputStream).defaultPage(pageNumber)
+                    .onPageChange(StudentQuizActivity.this)
+                    .enableAnnotationRendering(true)
+                    .scrollHandle(new DefaultScrollHandle(StudentQuizActivity.this))
+                    .spacing(10) // in dp
+                    .onPageError(StudentQuizActivity.this)
+                    .load();
+            ;
+        }
+    }
+
+
+    @Override
+    public void onPageChanged(int page, int pageCount) {
+        pageNumber = page;
+        setTitle(String.format("%s %s / %s", pdfFileName, page + 1, pageCount));
+    }
+
+    public String getFileName(Uri uri) {
+        String result = null;
+        if (uri.getScheme().equals("content")) {
+            Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+            try {
+                if (cursor != null && cursor.moveToFirst()) {
+                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                }
+            } finally {
+                if (cursor != null) {
+                    cursor.close();
+                }
+            }
+        }
+        if (result == null) {
+            result = uri.getLastPathSegment();
+        }
+        return result;
+    }
+
+
+    @Override
+    public void onPageError(int page, Throwable t) {
+        Log.e(TAG, "Cannot load page " + page);
+    }
+
 }

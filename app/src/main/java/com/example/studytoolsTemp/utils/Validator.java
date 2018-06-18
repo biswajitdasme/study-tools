@@ -57,7 +57,7 @@ public class Validator {
 
         String mobile = mobileText.getText().toString();
 
-        if (mobile.isEmpty() || mobile.length()!=11) {
+        if (mobile.isEmpty() || mobile.length() != 11) {
             mobileText.setError("Enter Valid Mobile Number");
             valid = false;
         } else {
@@ -66,8 +66,6 @@ public class Validator {
 
         return valid;
     }
-
-
 
 
 }

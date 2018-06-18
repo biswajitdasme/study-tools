@@ -22,7 +22,8 @@ import java.util.Comparator;
 
 
 public class FileUtils {
-    private FileUtils() {} //private constructor to enforce Singleton pattern
+    private FileUtils() {
+    } //private constructor to enforce Singleton pattern
 
     static final String TAG = "FileUtils";
     private static final boolean DEBUG = false; // Set to true to enable logging
@@ -221,7 +222,7 @@ public class FileUtils {
                 }
 
                 final String selection = "_id=?";
-                final String[] selectionArgs = new String[] {
+                final String[] selectionArgs = new String[]{
                         split[1]
                 };
 
@@ -318,8 +319,7 @@ public class FileUtils {
                                 id,
                                 MediaStore.Video.Thumbnails.MINI_KIND,
                                 null);
-                    }
-                    else if (mimeType.contains(FileUtils.MIME_TYPE_IMAGE)) {
+                    } else if (mimeType.contains(FileUtils.MIME_TYPE_IMAGE)) {
                         bm = MediaStore.Images.Thumbnails.getThumbnail(
                                 resolver,
                                 id,

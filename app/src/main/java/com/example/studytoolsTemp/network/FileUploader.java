@@ -39,26 +39,26 @@ public class FileUploader {
         Retrofit retrofit = RetrofitClient.getRetrofit();
         UserClient userClient = retrofit.create(UserClient.class);
 
-        Call<ResponseModel> call = userClient.uploadFile(descriptionPart,file);
+        Call<ResponseModel> call = userClient.uploadFile(descriptionPart, file);
 
         call.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
                 ResponseModel serverResponse = response.body();
 
-                showToast(context,serverResponse.getMessage());
+                showToast(context, serverResponse.getMessage());
 
             }
 
             @Override
             public void onFailure(Call<ResponseModel> call, Throwable t) {
-                showToast(context,t.getMessage());
+                showToast(context, t.getMessage());
             }
         });
 
     }
 
-    private static void showToast(Context context,String message) {
-        Toast.makeText(context,message,Toast.LENGTH_SHORT).show();
+    private static void showToast(Context context, String message) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
 }

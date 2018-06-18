@@ -4,20 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="24dp"
     android:orientation="vertical"
+    android:padding="24dp"
     tools:context="com.example.studytoolsTemp.activity.teacher.TeacherAddExamActivity">
 
     <EditText
         android:id="@+id/editText_exam_title"
         style="@style/editTextStyle"
-        android:hint="Exam Title"
-        />
+        android:hint="Exam Title" />
 
     <Button
         style="@style/button_style"
-        android:text="Add Exam"
         android:onClick="addExam"
-        />
+        android:text="Add Exam" />
 
 </LinearLayout>

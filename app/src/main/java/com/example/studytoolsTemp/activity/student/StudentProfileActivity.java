@@ -6,12 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.studytoolsTemp.R;
 import com.example.studytoolsTemp.activity.FileListActivity;
 import com.example.studytoolsTemp.activity.UpdateProfile;
-import com.example.studytoolsTemp.activity.teacher.TeacherExamResultActivity;
+import com.example.studytoolsTemp.activity.ExamResultActivity;
 import com.example.studytoolsTemp.data.preference.AppPreference;
 import com.example.studytoolsTemp.network.DataHandler;
 
@@ -21,8 +20,6 @@ public class StudentProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_profile);
-
-        setTitle("Student Home");
     }
 
     @Override
@@ -57,7 +54,7 @@ public class StudentProfileActivity extends AppCompatActivity {
 
     public void goToDocumentList(View view) {
         Intent intent = new Intent(this, FileListActivity.class);
-        intent.putExtra("forStudent",true);
+        intent.putExtra("forStudent", true);
         intent.putExtra("isQuestion", false);
         startActivity(intent);
     }
@@ -68,7 +65,7 @@ public class StudentProfileActivity extends AppCompatActivity {
     }
 
     public void goToCheckResult(View view) {
-        Intent intent = new Intent(this, TeacherExamResultActivity.class);
+        Intent intent = new Intent(this, ExamResultActivity.class);
         intent.putExtra("forTeacher", false);
         intent.putExtra("userid", AppPreference.getUserId(StudentProfileActivity.this));
         startActivity(intent);

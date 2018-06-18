@@ -1,7 +1,7 @@
 package com.example.studytoolsTemp.activity.teacher;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,7 +30,7 @@ public class TeacherAddExamActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(examTitle)) {
             Toast.makeText(this, "Exam title field is empty", Toast.LENGTH_SHORT).show();
         } else {
-            DataHandler.addExamTitle(this,examTitle);
+            DataHandler.addExamTitle(this, examTitle);
             editTextExamTitle.setText("");
         }
     }

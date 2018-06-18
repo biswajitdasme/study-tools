@@ -18,31 +18,41 @@
         style="@style/button_style"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="List of Documents"
         android:onClick="goToDocumentList"
-        />
+        android:text="List of Documents" />
 
     <Button
         style="@style/button_style"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add Exam"
-        android:onClick="goToAddExam"
-        />
+        android:onClick="goToQuestionList"
+        android:text="List of Questions" />
+
+    <!--    <Button
+            style="@style/button_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Exam"
+            android:onClick="goToAddExam"
+            />
+
+        <Button
+            style="@style/button_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add questions to Exam"
+            android:onClick="goToAddQuestions"
+            />-->
 
     <Button
         style="@style/button_style"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Add questions to Exam"
-        android:onClick="goToAddQuestions"
-        />
+        android:onClick="goToAddAnswers"
+        android:text="Add Answers of questions" />
 
     <Button
         style="@style/button_style"
-        android:text="Check Exam Result"
         android:onClick="goToExamResult"
-        />
+        android:text="Check Exam Result" />
 
     <Button
         style="@style/button_style"

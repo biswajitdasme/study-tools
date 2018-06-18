@@ -15,13 +15,20 @@
         android:hint="File Name"
         android:inputType="text" />
 
-<!--    <Spinner
+    <Spinner
         android:id="@+id/spinner_upload"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
-        android:spinnerMode="dropdown" />-->
+        android:spinnerMode="dropdown" />
+
+    <EditText
+        android:id="@+id/editText_number_of_questions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Number of questions"
+        android:inputType="number" />
 
     <Button
         android:id="@+id/button_chooseFile"

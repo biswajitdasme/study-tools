@@ -14,7 +14,7 @@ public class Question implements Parcelable {
     public Question() {
     }
 
-    public Question(int examid,String question, String option1, String option2,
+    public Question(int examid, String question, String option1, String option2,
                     String option3, int answerNr) {
         this.examid = examid;
         this.question = question;

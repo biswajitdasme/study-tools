@@ -1,12 +1,10 @@
 package com.example.studytoolsTemp.activity.student;
 
 import android.content.Intent;
-import android.provider.ContactsContract;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.example.studytoolsTemp.R;
 import com.example.studytoolsTemp.data.preference.AppPreference;
@@ -52,7 +50,7 @@ public class StudentExamList extends AppCompatActivity {
             int examid = data.getIntExtra(EXTRA_EXAM_ID, 0);
             int userid = Integer.parseInt(AppPreference.getUserId(StudentExamList.this));
 
-            DataHandler.storeResult(this,userid,examid,score);
+            DataHandler.storeResult(this, userid, examid, score);
 
             finish();
         }

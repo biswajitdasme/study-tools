@@ -21,7 +21,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.studytoolsTemp.R;
-import com.example.studytoolsTemp.activity.UpdateProfile;
 import com.example.studytoolsTemp.data.preference.AppPreference;
 import com.example.studytoolsTemp.models.FileInfo;
 import com.example.studytoolsTemp.network.DataHandler;
@@ -40,10 +39,12 @@ public class TeacherFileUpload extends AppCompatActivity {
     private static Uri mUri;
 
     private EditText mEditText;
+    private EditText mEditTextNumberOfQuestions;
     private TextView mTextView;
 
     private Spinner mSpinner;
-    private int mFileType=1;
+    private int mFileType;
+    private int mNumberOfQuestions = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,9 +55,10 @@ public class TeacherFileUpload extends AppCompatActivity {
 
         initializeViews();
 
-        //initializeSpinner();
+        initializeSpinner();
 
-        setTitle("Upload File");
+        mEditTextNumberOfQuestions.setVisibility(View.GONE);
+
     }
 
 
@@ -111,10 +113,11 @@ public class TeacherFileUpload extends AppCompatActivity {
     private void initializeViews() {
         mEditText = findViewById(R.id.editText_description);
         mTextView = findViewById(R.id.textView_fileDescription);
-       // mSpinner = findViewById(R.id.spinner_upload);
+        mSpinner = findViewById(R.id.spinner_upload);
+        mEditTextNumberOfQuestions = findViewById(R.id.editText_number_of_questions);
     }
 
-/*    private void initializeSpinner() {
+    private void initializeSpinner() {
         ArrayAdapter arrayAdapter = ArrayAdapter.createFromResource(this, R.array.array_fileType, android.R.layout.simple_spinner_item);
 
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -127,6 +130,13 @@ public class TeacherFileUpload extends AppCompatActivity {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     mFileType = position;
+
+                    if (mFileType == 2) {
+                        mEditTextNumberOfQuestions.setVisibility(View.VISIBLE);
+                    } else {
+                        mEditTextNumberOfQuestions.setVisibility(View.GONE);
+                        mNumberOfQuestions = 0;
+                    }
                 }
 
                 @Override
@@ -135,7 +145,7 @@ public class TeacherFileUpload extends AppCompatActivity {
                 }
             });
         }
-    }*/
+    }
 
     private void checkFilePermission() {
         if (ContextCompat.checkSelfPermission(TeacherFileUpload.this,
@@ -158,17 +168,19 @@ public class TeacherFileUpload extends AppCompatActivity {
     public void uploadFile(View view) {
         String description = mEditText.getText().toString();
 
+        if (mFileType == 2) {
+            mNumberOfQuestions = Integer.parseInt(mEditTextNumberOfQuestions.getText().toString());
+        }
+
         if (TextUtils.isEmpty(description)) {
             showToast("Enter File Name");
         } else if (mFileType == 0) {
             showToast("Select File Type");
-        }
-        else if(mUri==null || mUri.equals(Uri.EMPTY)){
+        } else if (mUri == null || mUri.equals(Uri.EMPTY)) {
             showToast("Select a File");
-        }
-        else {
+        } else {
             FileUploader.uploadFile(this, mUri, new FileInfo(description,
-                    Integer.parseInt(AppPreference.getUserId(this)),mFileType));
+                    Integer.parseInt(AppPreference.getUserId(this)), mFileType, mNumberOfQuestions));
         }
     }
 

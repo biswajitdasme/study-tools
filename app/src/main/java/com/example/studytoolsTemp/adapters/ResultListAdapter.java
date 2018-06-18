@@ -14,7 +14,7 @@ import com.example.studytoolsTemp.models.ExamResult;
 
 import java.util.ArrayList;
 
-public class ResultListAdapter extends RecyclerView.Adapter<ResultListAdapter.ResultListViewHolder>  {
+public class ResultListAdapter extends RecyclerView.Adapter<ResultListAdapter.ResultListViewHolder> {
 
     private final ArrayList<ExamResult> mResultList;
     private LayoutInflater mLayoutInflater;
@@ -31,7 +31,7 @@ public class ResultListAdapter extends RecyclerView.Adapter<ResultListAdapter.Re
     public ResultListAdapter.ResultListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View mItemView = mLayoutInflater.inflate(R.layout.result_list_item, parent, false);
-        return new ResultListViewHolder(mItemView,this);
+        return new ResultListViewHolder(mItemView, this);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class ResultListAdapter extends RecyclerView.Adapter<ResultListAdapter.Re
 
         holder.mNameTextView.setText(name);
         holder.mTitleTextView.setText(examTitle);
-        holder.mScoreTextView.setText("Result : "+String.valueOf(result));
+        holder.mScoreTextView.setText("Result : " + String.valueOf(result));
 
 /*        holder.mStartButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,7 +62,7 @@ public class ResultListAdapter extends RecyclerView.Adapter<ResultListAdapter.Re
         return mResultList.size();
     }
 
-    public class ResultListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ResultListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
 
         public final TextView mNameTextView;
@@ -84,7 +84,7 @@ public class ResultListAdapter extends RecyclerView.Adapter<ResultListAdapter.Re
         public void onClick(View v) {
             int position = getLayoutPosition();
             String examTitle = mResultList.get(position).getExamTitle();
-            Toast.makeText(mContext,examTitle,Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, examTitle, Toast.LENGTH_SHORT).show();
         }
     }
 }

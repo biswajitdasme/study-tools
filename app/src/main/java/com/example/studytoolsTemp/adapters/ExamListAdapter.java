@@ -19,7 +19,9 @@ import com.example.studytoolsTemp.models.Exam;
 
 import java.util.ArrayList;
 
-public class ExamListAdapter extends RecyclerView.Adapter<ExamListAdapter.ExamListViewHolder>  {
+import static com.example.studytoolsTemp.data.constant.AppConstant.BASE_URL;
+
+public class ExamListAdapter extends RecyclerView.Adapter<ExamListAdapter.ExamListViewHolder> {
 
     private final ArrayList<Exam> mExamList;
     private LayoutInflater mLayoutInflater;
@@ -36,7 +38,7 @@ public class ExamListAdapter extends RecyclerView.Adapter<ExamListAdapter.ExamLi
     public ExamListAdapter.ExamListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View mItemView = mLayoutInflater.inflate(R.layout.exam_list_item, parent, false);
-        return new ExamListViewHolder(mItemView,this);
+        return new ExamListViewHolder(mItemView, this);
     }
 
     @Override
@@ -45,15 +47,18 @@ public class ExamListAdapter extends RecyclerView.Adapter<ExamListAdapter.ExamLi
 
         final String examTitle = exam.getTitle();
         final int examId = exam.getId();
-
+        final String fileName = exam.getFileName();
         holder.mTitleTextView.setText(examTitle);
 
         holder.mStartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext.getApplicationContext(), StudentQuizActivity.class);
-                intent.putExtra("examId",examId);
-               // mContext.startActivity(intent);
+                intent.putExtra("examId", examId);
+                intent.putExtra("name", examTitle);
+
+                intent.putExtra("url", BASE_URL + "file/" + fileName);
+                // mContext.startActivity(intent);
                 ((Activity) mContext).startActivityForResult(intent, StudentExamList.REQUEST_QUIZ_CODE);
             }
         });
@@ -64,7 +69,7 @@ public class ExamListAdapter extends RecyclerView.Adapter<ExamListAdapter.ExamLi
         return mExamList.size();
     }
 
-    public class ExamListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ExamListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public final TextView mTitleTextView;
         public final Button mStartButton;
@@ -83,7 +88,7 @@ public class ExamListAdapter extends RecyclerView.Adapter<ExamListAdapter.ExamLi
         public void onClick(View v) {
             int position = getLayoutPosition();
             String examTitle = mExamList.get(position).getTitle();
-            Toast.makeText(mContext,examTitle,Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, examTitle, Toast.LENGTH_SHORT).show();
         }
     }
 }

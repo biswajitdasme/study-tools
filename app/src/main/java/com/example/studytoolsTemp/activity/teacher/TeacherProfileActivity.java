@@ -1,13 +1,14 @@
 package com.example.studytoolsTemp.activity.teacher;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.example.studytoolsTemp.R;
+import com.example.studytoolsTemp.activity.ExamResultActivity;
 import com.example.studytoolsTemp.activity.FileListActivity;
 import com.example.studytoolsTemp.activity.UpdateProfile;
 import com.example.studytoolsTemp.network.DataHandler;
@@ -19,7 +20,6 @@ public class TeacherProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher_profile);
 
-        setTitle("Teacher Home");
     }
 
     @Override
@@ -75,16 +75,21 @@ public class TeacherProfileActivity extends AppCompatActivity {
     }
 
     public void goToExamResult(View view) {
-        Intent intent = new Intent(this, TeacherExamResultActivity.class);
-         intent.putExtra("forTeacher",true);
+        Intent intent = new Intent(this, ExamResultActivity.class);
+        intent.putExtra("forTeacher", true);
         startActivity(intent);
     }
 
 
-/*    public void goToQuestionList(View view) {
+    public void goToQuestionList(View view) {
         Intent intent = new Intent(this, FileListActivity.class);
-        intent.putExtra("forStudent",false);
-        intent.putExtra("isQuestion",true);
+        intent.putExtra("forStudent", false);
+        intent.putExtra("isQuestion", true);
         startActivity(intent);
-    }*/
+    }
+
+    public void goToAddAnswers(View view) {
+        Intent intent = new Intent(this, TeacherAddAnswer.class);
+        startActivity(intent);
+    }
 }

@@ -3,6 +3,8 @@ package com.example.studytoolsTemp.models;
 public class Exam {
     private int id;
     private String title;
+    private String fileName;
+    private String fileDescription;
 
     public Exam() {
 
@@ -11,6 +13,12 @@ public class Exam {
     public Exam(int id, String title) {
         this.id = id;
         this.title = title;
+    }
+
+    public Exam(int id, String title, String fileName) {
+        this.id = id;
+        this.title = title;
+        this.fileName = fileName;
     }
 
     public int getId() {
@@ -29,4 +37,11 @@ public class Exam {
         this.title = title;
     }
 
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
 }

@@ -12,23 +12,20 @@
         style="@style/button_style"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="List of Documents"
         android:onClick="goToDocumentList"
-        />
+        android:text="List of Documents" />
 
     <Button
         style="@style/button_style"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="List of Exams"
         android:onClick="goToExamList"
-        />
+        android:text="List of Exams" />
 
     <Button
         style="@style/button_style"
-        android:text="Check Exam Result"
         android:onClick="goToCheckResult"
-        />
+        android:text="Check Exam Result" />
 
     <Button
         style="@style/button_style"

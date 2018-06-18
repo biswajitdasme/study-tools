@@ -10,23 +10,22 @@
         android:id="@+id/textView_StudentName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
         android:ellipsize="end"
         android:fontFamily="sans-serif-medium"
         android:maxLines="1"
         android:textAllCaps="true"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:textSize="16sp"
         android:textColor="#2B3D4D"
-        tools:text="Student Name"/>
+        android:textSize="16sp"
+        tools:text="Student Name" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/textView_examResultTitle"
@@ -37,23 +36,23 @@
             android:fontFamily="sans-serif-medium"
             android:maxLines="1"
             android:textAllCaps="true"
-            android:textSize="16sp"
             android:textColor="#2B3D4D"
-            tools:text="Exam Title"/>
+            android:textSize="16sp"
+            tools:text="Exam Title" />
 
         <TextView
             android:id="@+id/textView_examResult"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
+            android:layout_marginTop="8dp"
             android:layout_weight="1"
             android:ellipsize="end"
             android:fontFamily="sans-serif-medium"
             android:maxLines="1"
             android:textAllCaps="true"
-            android:layout_marginTop="8dp"
-            android:textSize="14sp"
             android:textColor="#2B3D4D"
-            tools:text="Score : "/>
+            android:textSize="14sp"
+            tools:text="Score : " />
     </LinearLayout>
 
 

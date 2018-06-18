@@ -1,7 +1,7 @@
 package com.example.studytoolsTemp.activity.teacher;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -58,7 +58,7 @@ public class TeacherAddQuestionsActivity extends AppCompatActivity {
             public void onFail(String msg) {
                 // Do Stuff
             }
-        },-1);
+        }, -1);
 
         String options[] = new String[]{"Select Answer", "Option 1", "Option 2", "Option 3"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(TeacherAddQuestionsActivity.this, android.R.layout.simple_spinner_item, options);
@@ -89,11 +89,12 @@ public class TeacherAddQuestionsActivity extends AppCompatActivity {
         } else if (answerId == 0) {
             Toast.makeText(this, "Select a answer", Toast.LENGTH_SHORT).show();
         } else {
-            quesId = examList.get(quesId-1).getId();
+            quesId = examList.get(quesId - 1).getId();
             Question q = new Question(quesId, question, option1, option2, option3, answerId);
-            DataHandler.addQuestion(this,q);
+            DataHandler.addQuestion(this, q);
         }
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.list_menu, menu);

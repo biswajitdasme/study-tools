@@ -17,7 +17,8 @@ public class FileInfo implements Parcelable {
     private String filename;
     @SerializedName("description")
     private String description;
-
+    @SerializedName("questions")
+    private int questions;
 
     public FileInfo() {
 
@@ -34,6 +35,13 @@ public class FileInfo implements Parcelable {
         this.fileType = fileType;
     }
 
+    public FileInfo(String description, int userid, int fileType, int questions) {
+        this.description = description;
+        this.userid = userid;
+        this.fileType = fileType;
+        this.questions = questions;
+    }
+
     public FileInfo(int id, String username, String filename, String description) {
         this.id = id;
         this.username = username;
@@ -41,10 +49,18 @@ public class FileInfo implements Parcelable {
         this.description = description;
     }
 
+    public FileInfo(int id, String username, String filename, String description, int questions) {
+        this.id = id;
+        this.username = username;
+        this.filename = filename;
+        this.description = description;
+        this.questions = questions;
+    }
+
     public final static Creator<FileInfo> CREATOR = new Creator<FileInfo>() {
 
         @SuppressWarnings({
-            "unchecked"
+                "unchecked"
         })
         public FileInfo createFromParcel(Parcel in) {
             FileInfo instance = new FileInfo();
@@ -66,7 +82,7 @@ public class FileInfo implements Parcelable {
     }
 
     public int describeContents() {
-        return  0;
+        return 0;
     }
 
     public int getId() {
@@ -92,4 +108,9 @@ public class FileInfo implements Parcelable {
     public int getFileType() {
         return fileType;
     }
+
+    public int getQuestions() {
+        return questions;
+    }
+
 }

@@ -12,15 +12,15 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.studytoolsTemp.activity.PDFViewerActivity;
 import com.example.studytoolsTemp.R;
+import com.example.studytoolsTemp.activity.PDFViewerActivity;
 import com.example.studytoolsTemp.models.FileInfo;
 
 import java.util.ArrayList;
 
 import static com.example.studytoolsTemp.data.constant.AppConstant.BASE_URL;
 
-public class FileListAdapter extends RecyclerView.Adapter<FileListAdapter.FileListViewHolder>  {
+public class FileListAdapter extends RecyclerView.Adapter<FileListAdapter.FileListViewHolder> {
 
     private final ArrayList<FileInfo> mFileList;
     private LayoutInflater mLayoutInflater;
@@ -37,7 +37,7 @@ public class FileListAdapter extends RecyclerView.Adapter<FileListAdapter.FileLi
     public FileListAdapter.FileListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View mItemView = mLayoutInflater.inflate(R.layout.file_list_item, parent, false);
-        return new FileListViewHolder(mItemView,this);
+        return new FileListViewHolder(mItemView, this);
     }
 
     @Override
@@ -49,12 +49,12 @@ public class FileListAdapter extends RecyclerView.Adapter<FileListAdapter.FileLi
         String uploaderName = file.getUsername();
 
         holder.mDescriptionTextView.setText(fileDescription);
-        holder.mUploaderTextView.setText("By : "+uploaderName);
+        holder.mUploaderTextView.setText("By : " + uploaderName);
 
         holder.mDownButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(BASE_URL+"file/"+fileName));
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(BASE_URL + "file/" + fileName));
 
                 if (intent.resolveActivity(mContext.getPackageManager()) != null) {
                     mContext.startActivity(intent);
@@ -67,7 +67,7 @@ public class FileListAdapter extends RecyclerView.Adapter<FileListAdapter.FileLi
             public void onClick(View v) {
                 Intent intent = new Intent(mContext.getApplicationContext(), PDFViewerActivity.class);
 
-                intent.putExtra("url",BASE_URL+"file/"+fileName);
+                intent.putExtra("url", BASE_URL + "file/" + fileName);
                 intent.putExtra("name", fileDescription);
                 mContext.startActivity(intent);
             }
@@ -79,7 +79,7 @@ public class FileListAdapter extends RecyclerView.Adapter<FileListAdapter.FileLi
         return mFileList.size();
     }
 
-    public class FileListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class FileListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public final TextView mDescriptionTextView;
         public final TextView mUploaderTextView;
@@ -94,14 +94,14 @@ public class FileListAdapter extends RecyclerView.Adapter<FileListAdapter.FileLi
             mUploaderTextView = itemView.findViewById(R.id.textView_uploaderName);
             mDownButton = itemView.findViewById(R.id.button_download);
             mOpenButton = itemView.findViewById(R.id.button_open);
-          //  itemView.setOnClickListener(this);
+            //  itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
             int position = getLayoutPosition();
             String fileName = mFileList.get(position).getFilename();
-            Toast.makeText(mContext,fileName,Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, fileName, Toast.LENGTH_SHORT).show();
 
 
         }

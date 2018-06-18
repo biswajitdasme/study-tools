@@ -36,13 +36,11 @@
     <Spinner
         android:id='@+id/spinner_answer'
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        />
+        android:layout_height="50dp" />
 
     <Button
         style="@style/button_style"
-        android:text="Add Question"
         android:onClick="addQuestion"
-        />
+        android:text="Add Question" />
 
 </LinearLayout>

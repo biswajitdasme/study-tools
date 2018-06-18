@@ -11,8 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/textView_fileName"
@@ -22,35 +21,34 @@
             android:fontFamily="sans-serif-medium"
             android:maxLines="1"
             android:textAllCaps="true"
-            android:textSize="14sp"
             android:textColor="#2B3D4D"
-            tools:text="File Name"/>
+            android:textSize="14sp"
+            tools:text="File Name" />
 
         <TextView
             android:id="@+id/textView_uploaderName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:ellipsize="end"
             android:fontFamily="sans-serif-medium"
             android:maxLines="1"
             android:textAllCaps="true"
-            android:layout_marginTop="8dp"
-            android:textSize="12sp"
             android:textColor="#B4BAC0"
-            tools:text="Uploader Name"/>
+            android:textSize="12sp"
+            tools:text="Uploader Name" />
     </LinearLayout>
 
     <Button
         android:id="@+id/button_open"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toStartOf="@id/button_download"
         android:layout_marginEnd="8dp"
-        android:text="Open"
+        android:layout_toStartOf="@id/button_download"
         android:background="@drawable/button_background"
+        android:text="Open"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="12sp"
-        />
+        android:textSize="12sp" />
 
     <Button
         android:id="@+id/button_download"
@@ -58,11 +56,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:text="Download"
         android:background="@drawable/button_background"
+        android:text="Download"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="12sp"
-        />
+        android:textSize="12sp" />
 
 </RelativeLayout>
 

@@ -1,4 +1,4 @@
-package com.example.studytoolsTemp.activity.teacher;
+package com.example.studytoolsTemp.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -16,7 +16,7 @@ import com.example.studytoolsTemp.network.DataHandler;
 
 import java.util.ArrayList;
 
-public class TeacherExamResultActivity extends AppCompatActivity {
+public class ExamResultActivity extends AppCompatActivity {
 
     private Spinner spinnerResultExamList;
     private ArrayList<Exam> examList;
@@ -43,7 +43,7 @@ public class TeacherExamResultActivity extends AppCompatActivity {
                         examTitles[i + 1] = examList.get(i).getTitle();
                     }
 
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(TeacherExamResultActivity.this, android.R.layout.simple_spinner_item, examTitles);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(ExamResultActivity.this, android.R.layout.simple_spinner_item, examTitles);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
                     spinnerResultExamList.setAdapter(adapter);
@@ -54,7 +54,7 @@ public class TeacherExamResultActivity extends AppCompatActivity {
 
                             if (position != 0) {
                                 int examid = examList.get(position - 1).getId();
-                                DataHandler.getResultList(TeacherExamResultActivity.this, -1, examid);
+                                DataHandler.getResultList(ExamResultActivity.this, -1, examid);
                             }
                         }
 
@@ -75,7 +75,7 @@ public class TeacherExamResultActivity extends AppCompatActivity {
 
             spinnerResultExamList.setVisibility(View.GONE);
 
-            DataHandler.getResultList(this,Integer.parseInt(userid),-1);
+            DataHandler.getResultList(this, Integer.parseInt(userid), -1);
         }
     }
 
