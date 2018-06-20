@@ -8,7 +8,7 @@ import android.view.MenuItem;
 
 import com.example.studytoolsTemp.R;
 import com.example.studytoolsTemp.data.preference.AppPreference;
-import com.example.studytoolsTemp.interfaces.ExamCallBack;
+import com.example.studytoolsTemp.interfaces.CallBack;
 import com.example.studytoolsTemp.models.Exam;
 import com.example.studytoolsTemp.network.DataHandler;
 
@@ -27,7 +27,7 @@ public class StudentExamList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_exam_list);
 
-        DataHandler.getExamList(this, new ExamCallBack() {
+        DataHandler.getExamList(this, new CallBack<Exam>() {
             @Override
             public void onSuccess(ArrayList<Exam> arrayList) {
                 examList = arrayList;

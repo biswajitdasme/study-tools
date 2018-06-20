@@ -25,15 +25,11 @@ import com.example.studytoolsTemp.adapters.ExamListAdapter;
 import com.example.studytoolsTemp.adapters.ResultListAdapter;
 import com.example.studytoolsTemp.adapters.FileListAdapter;
 import com.example.studytoolsTemp.data.preference.AppPreference;
-import com.example.studytoolsTemp.interfaces.AnswerCallBack;
-import com.example.studytoolsTemp.interfaces.ExamCallBack;
-import com.example.studytoolsTemp.interfaces.FilesCallBack;
-import com.example.studytoolsTemp.interfaces.QuestionCallBack;
+import com.example.studytoolsTemp.interfaces.CallBack;
 import com.example.studytoolsTemp.models.Answer;
 import com.example.studytoolsTemp.models.Exam;
 import com.example.studytoolsTemp.models.ExamResult;
 import com.example.studytoolsTemp.models.FileInfo;
-import com.example.studytoolsTemp.models.Question;
 import com.example.studytoolsTemp.models.User;
 
 import org.json.JSONArray;
@@ -260,7 +256,7 @@ public class DataHandler {
 
     }
 
-    public static void getQuestionsOfUser(final Context context, String userid, final FilesCallBack filesCallBack) {
+    public static void getQuestionsOfUser(final Context context, String userid, final CallBack<FileInfo> filesCallBack) {
 
         String url = BASE_URL + "filelist.php";
 
@@ -314,7 +310,7 @@ public class DataHandler {
 
     }
 
-    public static void getExamList(final Context context, final ExamCallBack onExamCallBack, final int userId) {
+    public static void getExamList(final Context context, final CallBack<Exam> onExamCallBack, final int userId) {
 
 
         String url = BASE_URL + "exampdflist.php";
@@ -445,7 +441,7 @@ public class DataHandler {
 
     }
 
-    public static void getAnswerList(final Context context, final AnswerCallBack answerCallBack, final int examId) {
+    public static void getAnswerList(final Context context, final CallBack<Answer> answerCallBack, final int examId) {
 
 
         String url = BASE_URL + "answerlist.php" + "?examid=" + examId;

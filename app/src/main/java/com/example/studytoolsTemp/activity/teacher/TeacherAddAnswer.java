@@ -11,7 +11,7 @@ import android.widget.Spinner;
 
 import com.example.studytoolsTemp.R;
 import com.example.studytoolsTemp.data.preference.AppPreference;
-import com.example.studytoolsTemp.interfaces.FilesCallBack;
+import com.example.studytoolsTemp.interfaces.CallBack;
 import com.example.studytoolsTemp.models.FileInfo;
 import com.example.studytoolsTemp.network.DataHandler;
 
@@ -36,7 +36,7 @@ public class TeacherAddAnswer extends AppCompatActivity {
 
         initializeViews();
 
-        DataHandler.getQuestionsOfUser(this, AppPreference.getUserId(this), new FilesCallBack() {
+        DataHandler.getQuestionsOfUser(this, AppPreference.getUserId(this), new CallBack<FileInfo>() {
             @Override
             public void onSuccess(ArrayList<FileInfo> fileList) {
                 examList = fileList;

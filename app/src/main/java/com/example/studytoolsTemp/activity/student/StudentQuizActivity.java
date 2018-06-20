@@ -3,13 +3,11 @@ package com.example.studytoolsTemp.activity.student;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
-import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.provider.OpenableColumns;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -21,7 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.studytoolsTemp.R;
-import com.example.studytoolsTemp.interfaces.AnswerCallBack;
+import com.example.studytoolsTemp.interfaces.CallBack;
 import com.example.studytoolsTemp.models.Answer;
 import com.example.studytoolsTemp.network.DataHandler;
 import com.github.barteksc.pdfviewer.PDFView;
@@ -111,7 +109,7 @@ public class StudentQuizActivity extends AppCompatActivity implements OnPageChan
         examId = getIntent().getIntExtra("examId", -1);
 
         if (savedInstanceState == null) {
-            DataHandler.getAnswerList(this, new AnswerCallBack() {
+            DataHandler.getAnswerList(this, new CallBack<Answer>() {
                 @Override
                 public void onSuccess(ArrayList<Answer> answerArrayList) {
                     answerList = answerArrayList;
