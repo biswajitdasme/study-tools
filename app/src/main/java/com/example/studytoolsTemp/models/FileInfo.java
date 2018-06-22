@@ -19,6 +19,10 @@ public class FileInfo implements Parcelable {
     private String description;
     @SerializedName("questions")
     private int questions;
+    @SerializedName("courseid")
+    private int courseid;
+    @SerializedName("duration")
+    private int duration;
 
     public FileInfo() {
 
@@ -29,6 +33,15 @@ public class FileInfo implements Parcelable {
         this.userid = userid;
         this.fileType = fileType;
         this.questions = questions;
+    }
+
+    public FileInfo(String description, int userid, int fileType, int questions, int courseid, int duration) {
+        this.userid = userid;
+        this.fileType = fileType;
+        this.description = description;
+        this.questions = questions;
+        this.courseid = courseid;
+        this.duration = duration;
     }
 
     public FileInfo(int id, String username, String filename, String description) {

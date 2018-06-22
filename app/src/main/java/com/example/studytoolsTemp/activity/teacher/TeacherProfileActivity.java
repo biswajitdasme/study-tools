@@ -80,4 +80,9 @@ public class TeacherProfileActivity extends AppCompatActivity {
         Intent intent = new Intent(this, TeacherAddAnswer.class);
         startActivity(intent);
     }
+
+    public void goToAddCourse(View view) {
+        Intent intent = new Intent(this, TeacherAddSubjects.class);
+        startActivity(intent);
+    }
 }

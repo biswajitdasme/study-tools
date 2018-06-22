@@ -5,6 +5,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.studytoolsTemp.R;
 import com.example.studytoolsTemp.data.preference.AppPreference;
@@ -22,22 +27,49 @@ public class StudentExamList extends AppCompatActivity {
 
     private ArrayList<Exam> examList;
 
+    private Spinner spinnerSemestersExamlist;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_exam_list);
 
-        DataHandler.getExamList(this, new CallBack<Exam>() {
+        spinnerSemestersExamlist = findViewById(R.id.spinner_semesters_examlist);
+
+        String semesters[] = {"Select Semester", "1st Semester", "2nd Semester", "3rd Semester",
+                "4th Semester", "5th Semester", "6th Semester", "7th Semester", "8th Semester"};
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, semesters);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerSemestersExamlist.setAdapter(adapter);
+
+        spinnerSemestersExamlist.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onSuccess(ArrayList<Exam> arrayList) {
-                examList = arrayList;
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if (position!=0) {
+                    DataHandler.getExamList(StudentExamList.this, new CallBack<Exam>() {
+                        @Override
+                        public void onSuccess(ArrayList<Exam> arrayList) {
+                            examList = arrayList;
+                        }
+
+                        @Override
+                        public void onFail(String msg) {
+
+                        }
+                    }, Integer.parseInt(AppPreference.getUserId(StudentExamList.this)),position);
+
+                }
             }
 
             @Override
-            public void onFail(String msg) {
+            public void onNothingSelected(AdapterView<?> parent) {
 
             }
-        }, Integer.parseInt(AppPreference.getUserId(this)));
+        });
+
+
     }
 
 

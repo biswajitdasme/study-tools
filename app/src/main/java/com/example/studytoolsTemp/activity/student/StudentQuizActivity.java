@@ -46,7 +46,7 @@ public class StudentQuizActivity extends AppCompatActivity implements OnPageChan
     public static final String EXTRA_EXAM_ID = "extraId";
     public static int examId;
 
-    private static final long COUNTDOWN_IN_MILLIS = 20000;
+    private static long COUNTDOWN_IN_MILLIS;
 
     private static final String KEY_SCORE = "keyScore";
     private static final String KEY_QUESTION_COUNT = "keyQuestionCount";
@@ -77,13 +77,20 @@ public class StudentQuizActivity extends AppCompatActivity implements OnPageChan
 
     private int score;
     private boolean answered;
-
+    private int duration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_quiz);
+
+        examId = getIntent().getIntExtra("examId", -1);
+        duration = getIntent().getIntExtra("duration", -1);
+
+        COUNTDOWN_IN_MILLIS = duration*60*1000;
+        timeLeftInMillis = COUNTDOWN_IN_MILLIS;
+        startCountDown();
 
         pdfView = findViewById(R.id.pdfViewQuestion);
         String url = getIntent().getStringExtra("url");
@@ -106,9 +113,8 @@ public class StudentQuizActivity extends AppCompatActivity implements OnPageChan
         textColorDefaultCd = textViewCountDown.getTextColors();
 
 
-        examId = getIntent().getIntExtra("examId", -1);
-
         if (savedInstanceState == null) {
+
             DataHandler.getAnswerList(this, new CallBack<Answer>() {
                 @Override
                 public void onSuccess(ArrayList<Answer> answerArrayList) {
@@ -176,8 +182,8 @@ public class StudentQuizActivity extends AppCompatActivity implements OnPageChan
             answered = false;
             buttonConfirmNext.setText("Confirm");
 
-            timeLeftInMillis = COUNTDOWN_IN_MILLIS;
-            startCountDown();
+            /*timeLeftInMillis = COUNTDOWN_IN_MILLIS;
+            startCountDown();*/
         } else {
             finishQuiz();
         }
@@ -196,6 +202,7 @@ public class StudentQuizActivity extends AppCompatActivity implements OnPageChan
                 timeLeftInMillis = 0;
                 updateCountDownText();
                 checkAnswer();
+                finishQuiz();
             }
         }.start();
     }
@@ -207,7 +214,7 @@ public class StudentQuizActivity extends AppCompatActivity implements OnPageChan
         String timeFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
         textViewCountDown.setText(timeFormatted);
 
-        if (timeLeftInMillis < 10000) {
+        if (timeLeftInMillis < 300000) {
             textViewCountDown.setTextColor(Color.RED);
         } else {
             textViewCountDown.setTextColor(textColorDefaultCd);
@@ -217,7 +224,7 @@ public class StudentQuizActivity extends AppCompatActivity implements OnPageChan
     private void checkAnswer() {
         answered = true;
 
-        countDownTimer.cancel();
+       // countDownTimer.cancel();
 
         RadioButton rbSelected = findViewById(rbGroup.getCheckedRadioButtonId());
         int answerNr = rbGroup.indexOfChild(rbSelected) + 1;

@@ -48,6 +48,7 @@ public class ExamListAdapter extends RecyclerView.Adapter<ExamListAdapter.ExamLi
         final String examTitle = exam.getTitle();
         final int examId = exam.getId();
         final String fileName = exam.getFileName();
+        final int duration = exam.getDuration();
         holder.mTitleTextView.setText(examTitle);
 
         holder.mStartButton.setOnClickListener(new View.OnClickListener() {
@@ -56,6 +57,7 @@ public class ExamListAdapter extends RecyclerView.Adapter<ExamListAdapter.ExamLi
                 Intent intent = new Intent(mContext.getApplicationContext(), StudentQuizActivity.class);
                 intent.putExtra("examId", examId);
                 intent.putExtra("name", examTitle);
+                intent.putExtra("duration",duration);
 
                 intent.putExtra("url", BASE_URL + "file/" + fileName);
                 // mContext.startActivity(intent);

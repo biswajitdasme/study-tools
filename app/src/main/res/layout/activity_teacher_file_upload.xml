@@ -13,6 +13,23 @@
         android:hint="File Name"
         android:inputType="text" />
 
+
+    <Spinner
+        android:id="@+id/spinner_semester_list"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:spinnerMode="dropdown" />
+
+    <Spinner
+        android:id="@+id/spinner_course_list"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:spinnerMode="dropdown" />
+
     <Spinner
         android:id="@+id/spinner_upload"
         android:layout_width="match_parent"
@@ -25,6 +42,14 @@
         android:id="@+id/editText_number_of_questions"
         style="@style/editTextStyle"
         android:hint="Number of questions"
+        android:visibility="gone"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/editText_exam_duration"
+        style="@style/editTextStyle"
+        android:hint="Duration in minutes"
+        android:visibility="gone"
         android:inputType="number" />
 
     <Button

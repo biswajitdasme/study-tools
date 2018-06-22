@@ -9,6 +9,12 @@
 
     <Button
         style="@style/button_style"
+        android:text="Add Course"
+        android:onClick="goToAddCourse"
+        />
+
+    <Button
+        style="@style/button_style"
         android:onClick="goToUploadFile"
         android:text="Upload File" />
 

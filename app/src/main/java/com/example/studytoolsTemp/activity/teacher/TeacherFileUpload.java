@@ -22,12 +22,16 @@ import android.widget.Toast;
 
 import com.example.studytoolsTemp.R;
 import com.example.studytoolsTemp.data.preference.AppPreference;
+import com.example.studytoolsTemp.interfaces.CallBack;
+import com.example.studytoolsTemp.models.Course;
+import com.example.studytoolsTemp.models.Exam;
 import com.example.studytoolsTemp.models.FileInfo;
 import com.example.studytoolsTemp.network.DataHandler;
 import com.example.studytoolsTemp.network.FileUploader;
 import com.example.studytoolsTemp.utils.FileUtils;
 
 import java.io.File;
+import java.util.ArrayList;
 
 public class TeacherFileUpload extends AppCompatActivity {
 
@@ -40,11 +44,17 @@ public class TeacherFileUpload extends AppCompatActivity {
 
     private EditText mEditText;
     private EditText mEditTextNumberOfQuestions;
+    private EditText mEditTextExamDuration;
     private TextView mTextView;
 
     private Spinner mSpinner;
+    private Spinner mSpinnerSemesterList;
+    private Spinner mSpinnerCourseList;
+
     private int mFileType;
+    private int courseId=0;
     private int mNumberOfQuestions = 0;
+    private int mExamDuration = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +66,6 @@ public class TeacherFileUpload extends AppCompatActivity {
         initializeViews();
 
         initializeSpinner();
-
-        mEditTextNumberOfQuestions.setVisibility(View.GONE);
 
     }
 
@@ -114,6 +122,10 @@ public class TeacherFileUpload extends AppCompatActivity {
         mTextView = findViewById(R.id.textView_fileDescription);
         mSpinner = findViewById(R.id.spinner_upload);
         mEditTextNumberOfQuestions = findViewById(R.id.editText_number_of_questions);
+        mEditTextExamDuration = findViewById(R.id.editText_exam_duration);
+
+        mSpinnerSemesterList = findViewById(R.id.spinner_semester_list);
+        mSpinnerCourseList = findViewById(R.id.spinner_course_list);
     }
 
     private void initializeSpinner() {
@@ -124,6 +136,66 @@ public class TeacherFileUpload extends AppCompatActivity {
         mSpinner.setAdapter(arrayAdapter);
         mSpinner.setSelection(0);
 
+
+        String semesters[] = {"Select Semester", "1st Semester", "2nd Semester", "3rd Semester",
+                "4th Semester", "5th Semester", "6th Semester", "7th Semester", "8th Semester"};
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(TeacherFileUpload.this, android.R.layout.simple_spinner_item, semesters);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mSpinnerSemesterList.setAdapter(adapter);
+
+        mSpinnerSemesterList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if(position!=0){
+                    DataHandler.getCourseList(TeacherFileUpload.this, new CallBack<Course>() {
+                        @Override
+                        public void onSuccess(final ArrayList<Course> list) {
+
+                            final ArrayList<String> courseList = new ArrayList<>();
+                            courseList.add("Select Course");
+                            for (Course course : list) {
+                                courseList.add(course.getCourse());
+                            }
+
+                            ArrayAdapter<String> adapter = new ArrayAdapter<String>(TeacherFileUpload.this, android.R.layout.simple_spinner_item, courseList);
+                            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            mSpinnerCourseList.setAdapter(adapter);
+
+                            mSpinnerCourseList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                @Override
+                                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                                    if(position!=0)
+                                        courseId = list.get(position-1).getId();
+
+                                }
+
+                                @Override
+                                public void onNothingSelected(AdapterView<?> parent) {
+
+                                }
+                            });
+
+                        }
+
+                        @Override
+                        public void onFail(String msg) {
+
+                        }
+                    }, position);
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
         if (mSpinner != null) {
             mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
@@ -132,6 +204,8 @@ public class TeacherFileUpload extends AppCompatActivity {
 
                     if (mFileType == 2) {
                         mEditTextNumberOfQuestions.setVisibility(View.VISIBLE);
+                        mEditTextExamDuration.setVisibility(View.VISIBLE);
+
                     } else {
                         mEditTextNumberOfQuestions.setVisibility(View.GONE);
                         mNumberOfQuestions = 0;
@@ -169,6 +243,7 @@ public class TeacherFileUpload extends AppCompatActivity {
 
         if (mFileType == 2) {
             mNumberOfQuestions = Integer.parseInt(mEditTextNumberOfQuestions.getText().toString());
+            mExamDuration = Integer.parseInt(mEditTextExamDuration.getText().toString());
         }
 
         if (TextUtils.isEmpty(description)) {
@@ -177,9 +252,13 @@ public class TeacherFileUpload extends AppCompatActivity {
             showToast("Select File Type");
         } else if (mUri == null || mUri.equals(Uri.EMPTY)) {
             showToast("Select a File");
+        } else if (mFileType == 2 && courseId == 0) {
+            showToast("Select a course");
         } else {
             FileUploader.uploadFile(this, mUri, new FileInfo(description,
-                    Integer.parseInt(AppPreference.getUserId(this)), mFileType, mNumberOfQuestions));
+                    Integer.parseInt(AppPreference.getUserId(this)), mFileType, mNumberOfQuestions, courseId, mExamDuration));
+
+//            Toast.makeText(this, "" + mNumberOfQuestions + " " + courseId, Toast.LENGTH_SHORT).show();
         }
     }
 

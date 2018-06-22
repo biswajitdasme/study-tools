@@ -69,7 +69,7 @@ public class ExamResultActivity extends AppCompatActivity {
                 public void onFail(String msg) {
                     // Do Stuff
                 }
-            }, -1);
+            }, -1,-1);
         } else {
             String userid = getIntent().getStringExtra("userid");
 

@@ -27,6 +27,7 @@ import com.example.studytoolsTemp.adapters.FileListAdapter;
 import com.example.studytoolsTemp.data.preference.AppPreference;
 import com.example.studytoolsTemp.interfaces.CallBack;
 import com.example.studytoolsTemp.models.Answer;
+import com.example.studytoolsTemp.models.Course;
 import com.example.studytoolsTemp.models.Exam;
 import com.example.studytoolsTemp.models.ExamResult;
 import com.example.studytoolsTemp.models.FileInfo;
@@ -47,6 +48,7 @@ public class DataHandler {
     static final String LOG_TAG = DataHandler.class.getSimpleName();
     private static ArrayList<FileInfo> fileList = new ArrayList<>();
     private static ArrayList<Exam> examList = new ArrayList<>();
+    private static ArrayList<Course> courseList = new ArrayList<>();
     private static ArrayList<Answer> answerList = new ArrayList<>();
     private static ArrayList<ExamResult> examResults = new ArrayList<>();
 
@@ -310,13 +312,82 @@ public class DataHandler {
 
     }
 
-    public static void getExamList(final Context context, final CallBack<Exam> onExamCallBack, final int userId) {
+    public static void getExamList(final Context context, final CallBack<Exam> onExamCallBack, final int userId, final int semester) {
 
 
         String url = BASE_URL + "exampdflist.php";
 
-        if (userId != -1)
+
+        if (userId != -1 && semester != -1) {
+            url += "?userid=" + userId + "&semester=" + semester;
+        } else if (userId != -1)
             url += "?userid=" + userId;
+
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    JSONArray jsonArray = jsonObject.getJSONArray("result");
+
+                    JSONObject flagObject = jsonArray.getJSONObject(0);
+
+                    examList.clear();
+
+                    if (flagObject.getString("success").equalsIgnoreCase("true")) {
+
+
+                        int length = jsonArray.length();
+
+                        for (int i = 1; i < length; i++) {
+                            JSONObject examObject = jsonArray.getJSONObject(i);
+
+                            examList.add(new Exam(examObject.getInt("id"),
+                                    examObject.getString("examtitle"),
+                                    examObject.getString("filename"),
+                                    Integer.parseInt(examObject.getString("duration"))
+                            ));
+                        }
+
+                    } else {
+
+                        showToast(context, "No Data Found For You");
+                    }
+
+                    if (userId != -1) {
+                        RecyclerView recyclerViewList = ((Activity) context).findViewById(R.id.recyclerView_examList);
+                        ExamListAdapter examListAdapter = new ExamListAdapter(context, examList);
+
+                        recyclerViewList.setAdapter(examListAdapter);
+                        recyclerViewList.setLayoutManager(new LinearLayoutManager(context));
+                    }
+
+                    onExamCallBack.onSuccess(examList);
+
+                } catch (JSONException e) {
+                    Log.e(LOG_TAG, e.getMessage());
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(LOG_TAG, "" + error);
+            }
+        });
+
+        requestQueue.add(stringRequest);
+
+    }
+
+    public static void getCourseList(final Context context, final CallBack<Course> onCourseCallBack, final int semester) {
+
+
+        String url = BASE_URL + "courselist.php";
+
+        url += "?semester=" + semester;
 
 
         RequestQueue requestQueue = Volley.newRequestQueue(context);
@@ -332,28 +403,20 @@ public class DataHandler {
 
                     if (flagObject.getString("success").equalsIgnoreCase("true")) {
 
-                        examList.clear();
+                        courseList.clear();
 
                         int length = jsonArray.length();
 
                         for (int i = 1; i < length; i++) {
-                            JSONObject examObject = jsonArray.getJSONObject(i);
+                            JSONObject courseObject = jsonArray.getJSONObject(i);
 
-                            examList.add(new Exam(examObject.getInt("id"),
-                                    examObject.getString("examtitle"),
-                                    examObject.getString("filename")
+                            courseList.add(new Course(courseObject.getInt("id"),
+                                    Integer.parseInt(courseObject.getString("semester")),
+                                    courseObject.getString("subject")
                             ));
                         }
 
-                        if (userId != -1) {
-                            RecyclerView recyclerViewList = ((Activity) context).findViewById(R.id.recyclerView_examList);
-                            ExamListAdapter examListAdapter = new ExamListAdapter(context, examList);
-
-                            recyclerViewList.setAdapter(examListAdapter);
-                            recyclerViewList.setLayoutManager(new LinearLayoutManager(context));
-                        }
-
-                        onExamCallBack.onSuccess(examList);
+                        onCourseCallBack.onSuccess(courseList);
 
                     } else {
 
@@ -531,6 +594,41 @@ public class DataHandler {
 
     }
 
+    public static void storeCourse(final Context context, final int semesterId, final String courseTitle) {
+
+        String url = BASE_URL + "storecourse.php";
+
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i(LOG_TAG, "" + error);
+
+                Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> stringMap = new HashMap<>();
+
+                stringMap.put("semester", String.valueOf(semesterId));
+                stringMap.put("coursetitle", courseTitle);
+                return stringMap;
+            }
+        };
+
+        requestQueue.add(stringRequest);
+
+    }
+
     public static void storeAnswer(final Context context, final int examid, final int questionnum, final int answer) {
 
         String url = BASE_URL + "storeanswer.php";
@@ -597,7 +695,6 @@ public class DataHandler {
 
         alertDialog.show();
     }
-
 
 
 }
