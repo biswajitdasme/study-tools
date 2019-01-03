@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="24dp"
-    tools:context="com.example.studytoolsTemp.activity.teacher.TeacherAddSubjects">
+    tools:context="com.example.studytools.activity.teacher.TeacherAddSubjects">
 
     <Spinner
         android:id="@+id/spinner_semesters"
@@ -18,11 +18,16 @@
     <EditText
         android:id="@+id/editText_subject_title"
         style="@style/editTextStyle"
-        android:hint="Subject Title" />
+        android:hint="Subject Title"
+        android:visibility="invisible"
+        />
 
     <Button
+        android:id="@+id/button_add_course"
         android:onClick="addSubject"
         style="@style/button_style"
-        android:text="Add Course" />
+        android:text="Add Course"
+        android:visibility="invisible"
+        />
 
 </LinearLayout>

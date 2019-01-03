@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.studytoolsTemp">
+    package="com.example.studytools">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -13,57 +13,58 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.MainActivity">
+        <activity android:name="com.example.studytools.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.LoginActivity" />
-        <activity android:name=".activity.student.StudentSignUpActivity" />
+        <activity android:name="com.example.studytools.activity.LoginActivity" />
+        <activity android:name="com.example.studytools.activity.student.StudentSignUpActivity" />
         <activity
-            android:name=".activity.student.StudentProfileActivity"
+            android:name="com.example.studytools.activity.student.StudentProfileActivity"
             android:label="Student Home" />
         <activity
-            android:name=".activity.teacher.TeacherProfileActivity"
+            android:name="com.example.studytools.activity.teacher.TeacherProfileActivity"
             android:label="Teacher Home" />
         <activity
-            android:name=".activity.UpdateProfile"
+            android:name="com.example.studytools.activity.UpdateProfile"
             android:label="Update Profile" />
         <activity
-            android:name=".activity.teacher.TeacherFileUpload"
+            android:name="com.example.studytools.activity.teacher.TeacherFileUpload"
             android:label="Upload File"
-            android:parentActivityName=".activity.teacher.TeacherProfileActivity">
+            android:parentActivityName="com.example.studytools.activity.teacher.TeacherProfileActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activity.teacher.TeacherProfileActivity" />
+                android:value="com.example.studytools.activity.teacher.TeacherProfileActivity" />
         </activity>
         <activity
-            android:name=".activity.FileListActivity"
+            android:name="com.example.studytools.activity.FileListActivity"
             android:label="Uploaded Files" />
-        <activity android:name=".activity.PDFViewerActivity" />
+        <activity android:name="com.example.studytools.activity.PDFViewerActivity" />
         <activity
-            android:name=".activity.student.StudentExamList"
+            android:name="com.example.studytools.activity.student.StudentExamList"
             android:label="Exam List"
-            android:parentActivityName=".activity.student.StudentProfileActivity">
+            android:parentActivityName="com.example.studytools.activity.student.StudentProfileActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activity.student.StudentProfileActivity" />
+                android:value="com.example.studytools.activity.student.StudentProfileActivity" />
         </activity>
-        <activity android:name=".activity.student.StudentQuizActivity" />
+        <activity android:name="com.example.studytools.activity.student.StudentQuizActivity" />
         <activity
-            android:name=".activity.ExamResultActivity"
+            android:name="com.example.studytools.activity.ExamResultActivity"
             android:label="Exam Result" />
         <activity
-            android:name=".activity.teacher.TeacherAddAnswer"
+            android:name="com.example.studytools.activity.teacher.TeacherAddAnswer"
             android:label="Add Answers"
-            android:parentActivityName=".activity.teacher.TeacherProfileActivity">
+            android:parentActivityName="com.example.studytools.activity.teacher.TeacherProfileActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activity.teacher.TeacherProfileActivity" />
+                android:value="com.example.studytools.activity.teacher.TeacherProfileActivity" />
         </activity>
-        <activity android:name=".activity.teacher.TeacherAddSubjects"></activity>
+        <activity android:name="com.example.studytools.activity.teacher.TeacherAddSubjects" />
+        <activity android:name="com.example.studytools.activity.AdminProfileActivity"></activity>
     </application>
 
 </manifest>

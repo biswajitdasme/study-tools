@@ -22,9 +22,8 @@
         <EditText
             android:id="@+id/input_login_username"
             style="@style/editTextStyle"
-            android:hint="@string/editText_hint_email"
+            android:hint="@string/editText_hint_username"
             android:inputType="text" />
-
 
         <EditText
             android:id="@+id/input_login_password"

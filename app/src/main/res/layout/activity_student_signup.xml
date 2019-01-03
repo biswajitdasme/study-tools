@@ -34,6 +34,14 @@
             android:hint="@string/editText_hint_mobile_number"
             android:inputType="phone" />
 
+        <Spinner
+            android:id="@+id/spinner_user_type"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:spinnerMode="dropdown" />
+
         <EditText
             android:id="@+id/input_signUp_username"
             style="@style/editTextStyle"
